@@ -1,48 +1,86 @@
 package com.example.quiz
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import java.time.ZoneOffset
+import androidx.appcompat.app.AppCompatActivity
+
+import kotlin.math.round
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+    private var Score = 0
     private lateinit var trueButton : Button
     private lateinit var falseButton : Button
     private lateinit var nextButton : ImageButton
     private lateinit var prevButton : ImageButton
     private lateinit var questionTextView : TextView
-    private val questionBank = listOf(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_africa, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, true),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true))
+    private var questionBank = listOf(
+        Question(R.string.question_australia, true,true),
+        Question(R.string.question_africa, true,true),
+        Question(R.string.question_oceans, true,true),
+        Question(R.string.question_mideast, true,true),
+        Question(R.string.question_americas, true,true),
+        Question(R.string.question_asia, true,true))
     private var currentIndex = 0
 
     private fun checkAnswer(userAnswer : Boolean){
+
+
         val correctAnswer = questionBank[currentIndex].answer
 
         val messageResId = if (userAnswer == correctAnswer){
+
+            Score += 1
             R.string.correct_toast
+
+
         }else{
+
             R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId,Toast.LENGTH_SHORT).show()
+        questionBank[currentIndex].enabled = false
+        if (!questionBank[currentIndex].enabled){
+            trueButton.isEnabled = false
+            falseButton.isEnabled = false
+        }
+        if (currentIndex == questionBank.size-1){
+            Log.d(TAG,"questionbank")
+
+
+
+
+            //val score:Double = (Score.toDouble()/questionBank.size)*100
+            var total:Double = (Score.toDouble()/questionBank.size)*100
+            total = round(total*100) / 100
+            val sb = StringBuilder()
+            sb.append(total)
+            sb.append("%")
+            val scoreMessage = sb.toString()
+            //var score2 = score.toBigDecimal().toPlainString()
+            //Toast.makeText(this,score2,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, scoreMessage,Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun updateQuestion(){
         val questionTextResId = questionBank[currentIndex].textResId
         questionTextView.setText(questionTextResId)
+        if (questionBank[currentIndex].enabled){
+            trueButton.isEnabled = true
+            falseButton.isEnabled = true
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG,"onCreate(Bundle?) called")
         setContentView(R.layout.activity_main)
 
         trueButton = findViewById(R.id.true_button)
@@ -60,7 +98,6 @@ class MainActivity : AppCompatActivity() {
         nextButton.setOnClickListener(){
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
-
         }
         prevButton.setOnClickListener(){
             if (currentIndex == 0){
@@ -74,5 +111,23 @@ class MainActivity : AppCompatActivity() {
             updateQuestion()
         }
         updateQuestion()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG,"onStart() called")
+
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume() called")
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause() called")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy() called")
     }
 }
