@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import java.lang.Exception
 
 import kotlin.math.round
 
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateQuestion(){
+
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
         if (quizViewModel.questionBank[quizViewModel.currentIndex].enabled){
