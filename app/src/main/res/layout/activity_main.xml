@@ -35,13 +35,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
         <ImageButton
             android:id="@+id/prev_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/arrow_left" />
-
-
 
         <ImageButton
             android:id="@+id/next_button"
@@ -49,5 +48,12 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/arrow_right" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/cheat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/cheat_button" />
 
 </LinearLayout>

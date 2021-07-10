@@ -7,12 +7,12 @@ private const val TAG = "QuizViewModel"
 class QuizViewModel : ViewModel() {
     var currentIndex = 0
     var questionBank = listOf(
-        Question(R.string.question_australia, true,true),
-        Question(R.string.question_africa, true,true),
-        Question(R.string.question_oceans, true,true),
-        Question(R.string.question_mideast, true,true),
-        Question(R.string.question_americas, true,true),
-        Question(R.string.question_asia, true,true))
+        Question(R.string.question_australia, true,true, false),
+        Question(R.string.question_africa, true,true, false),
+        Question(R.string.question_oceans, true,true, false),
+        Question(R.string.question_mideast, true,true, false),
+        Question(R.string.question_americas, true,true, false),
+        Question(R.string.question_asia, true,true, false))
 
     val currentQuestionAnswer: Boolean
         get() = questionBank[currentIndex].answer
